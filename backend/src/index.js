@@ -13,14 +13,14 @@ dotenv.config();
 const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
-app.use(express.json({ limit: '5mb' }));
-app.use(express.urlencoded({ limit: '5mb', extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({extended: true }));
 app.use(cookieParser());
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 );
 
@@ -34,6 +34,10 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../frontend', 'dist', 'index.html'));
   });
 }
+
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'OK', Message: 'Server is running' });
+});
 
 server.listen(PORT, () => {
   console.log('Server is running on port:' + PORT);
