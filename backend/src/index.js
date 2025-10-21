@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-//Health check
+//Health check endpoint
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'OK', Message: 'Server is running' });
 });
